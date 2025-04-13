@@ -2,12 +2,10 @@ name: Static code checking
 on:
   push:
     branches:
-      - $default-branch
-      - $protected-branches
+      - main
   pull_request:
     branches:
-      - $default-branch
-      - $protected-branches
+      - main
 
 jobs:
   code_linting:
