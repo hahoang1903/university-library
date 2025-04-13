@@ -1,0 +1,34 @@
+name: Static code checking
+on:
+  push:
+    branches:
+      - $default_branch
+      - $protected_branch
+  pull_request:
+    # must be subset of push branches
+    branches:
+      - $default_branch
+
+jobs:
+  code_linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ESLint and plugins
+        run: npm install --only=dev --force
+
+      - name: Run ESLint
+        run: npx eslint .
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install --only=prod --force
+
+      - name: Build
+        run: npm run build
