@@ -8,6 +8,7 @@ on:
     # must be subset of push branches
     branches:
       - $default_branch
+      - $protected_branch
 
 jobs:
   code_linting:
