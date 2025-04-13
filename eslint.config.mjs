@@ -10,6 +10,9 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: ["components/ui/**/*", ".next/**/*"],
+  },
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
@@ -17,6 +20,11 @@ const eslintConfig = [
     "plugin:tailwindcss/recommended",
     "prettier"
   ),
+  {
+    rules: {
+      "tailwindcss/no-custom-classname": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
