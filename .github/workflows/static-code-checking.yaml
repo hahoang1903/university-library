@@ -1,14 +1,8 @@
 name: Static code checking
 on:
-  push:
-    branches:
-      - $default_branch
-      - $protected_branch
   pull_request:
-    # must be subset of push branches
     branches:
-      - $default_branch
-      - $protected_branch
+      - main
 
 jobs:
   code_linting:
