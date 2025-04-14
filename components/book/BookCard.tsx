@@ -1,5 +1,5 @@
 import { Book } from "@/types/book";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import BookCover from "./BookCover";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
