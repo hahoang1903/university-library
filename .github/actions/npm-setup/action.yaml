@@ -1,12 +1,9 @@
-name: "npm setup helper"
-description: "Checkout, setup Node (with npm cache), and install via npm ci"
+name: "npm dependencies setup"
+description: "Setup Node (with npm cache), and install via npm ci"
 
 runs:
   using: "composite"
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Setup Node.js (with npm cache)
       uses: actions/setup-node@v3
       with:
