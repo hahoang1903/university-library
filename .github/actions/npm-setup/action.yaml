@@ -1,0 +1,15 @@
+name: "npm dependencies setup"
+description: "Setup Node (with npm cache), and install via npm ci"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js (with npm cache)
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
+        cache: npm
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci --force
