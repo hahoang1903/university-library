@@ -45,7 +45,9 @@ const AuthForm = <T extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async (data) => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    console.log(data);
+  };
 
   const handleImageChange = (file: File | undefined) => {
     form.setValue("universityCard" as Path<T>, file as PathValue<T, Path<T>>);
