@@ -11,38 +11,16 @@ jobs:
   code_linting:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
-      - name: Install dependencies
-        run: npm ci --force
+      - name: Setup dependencies
+        uses: ./.github/actions/npm-setup
 
       - name: Run ESLint
         run: npx eslint . --max-warnings 0
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
-      - name: Install dependencies
-        run: npm ci --force
+      - name: Setup dependencies
+        uses: ./.github/actions/npm-setup
 
       - name: Build
         run: npm run build
