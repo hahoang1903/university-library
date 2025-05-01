@@ -11,7 +11,10 @@ const SignInPage = () => (
       email: "",
       password: "",
     }}
-    onSubmit={() => {}}
+    onSubmit={async (data) => {
+      console.log(data);
+      return { success: true };
+    }}
   />
 );
 

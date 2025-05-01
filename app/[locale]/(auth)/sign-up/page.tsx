@@ -12,9 +12,12 @@ const SignUpPage = () => (
       password: "",
       fullName: "",
       universityId: 0,
-      universityCard: "",
+      universityCard: undefined,
     }}
-    onSubmit={() => {}}
+    onSubmit={async (data) => {
+      console.log(data);
+      return { success: true };
+    }}
   />
 );
 
