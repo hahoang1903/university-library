@@ -9,7 +9,7 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export const STATUS_ENUM = pgEnum("status_enum", [
+export const STATUS_ENUM = pgEnum("status", [
   "PENDING",
   "APPROVED",
   "REJECTED",

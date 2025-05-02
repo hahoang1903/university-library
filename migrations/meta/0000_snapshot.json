@@ -1,5 +1,5 @@
 {
-  "id": "b18e5e45-edf9-444a-bb13-8cbd89bc8469",
+  "id": "29e16066-d009-4838-933d-1e1f28e379dd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -47,7 +47,7 @@
         },
         "status": {
           "name": "status",
-          "type": "status_enum",
+          "type": "status",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -131,8 +131,8 @@
         "ADMIN"
       ]
     },
-    "public.status_enum": {
-      "name": "status_enum",
+    "public.status": {
+      "name": "status",
       "schema": "public",
       "values": [
         "PENDING",
