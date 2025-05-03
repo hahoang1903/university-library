@@ -1,6 +1,7 @@
 "use client";
 
 import AuthForm from "@/components/form/AuthForm";
+import { signUp } from "@/lib/actions/auth";
 import { signUpSchema } from "@/lib/validations";
 
 const SignUpPage = () => (
@@ -14,10 +15,7 @@ const SignUpPage = () => (
       universityId: 0,
       universityCard: undefined,
     }}
-    onSubmit={async (data) => {
-      console.log(data);
-      return { success: true };
-    }}
+    submitAction={signUp}
   />
 );
 

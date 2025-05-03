@@ -55,6 +55,11 @@ export const FIELD_TYPES = {
   password: "password",
 };
 
+export const PUBLIC_PAGES = {
+  signIn: "/sign-in",
+  signUp: "/sign-up",
+};
+
 export const sampleBooks = [
   {
     id: "1",

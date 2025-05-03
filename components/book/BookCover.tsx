@@ -41,6 +41,7 @@ const BookCover = ({
           alt="book-cover"
           fill
           className="rounded-sm object-fill"
+          sizes="(max-width: 479px) 50vw, 33vw"
         />
       </div>
     </div>

@@ -8,7 +8,7 @@ import type {
   SubmitHandler,
   UseFormReturn,
 } from "react-hook-form";
-import type { ZodType } from "zod";
+import { type ZodType } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,30 +23,67 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
+import { useToast } from "@/hooks/use-toast";
 import ImageUpload from "./ImageUpload";
+import { useLocale } from "next-intl";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 type Props<T extends FieldValues> = {
   type: "SIGN_IN" | "SIGN_UP";
   schema: ZodType<T>;
   defaultValues: DefaultValues<T>;
-  onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
+  submitAction: (data: T) => Promise<{ success: boolean; message: string }>;
 };
 
 const AuthForm = <T extends FieldValues>({
   type,
   schema,
   defaultValues,
+  submitAction,
 }: Props<T>) => {
   const isSignIn = type === "SIGN_IN";
   const form: UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
+  const { toast } = useToast();
+  const router = useRouter();
+  const locale = useLocale();
+  const [isAllowSubmit, setIsAllowSubmit] = useState(true);
+  const { data: session, update } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/", { locale });
+    }
+  }, [locale, router, session]);
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    console.log(data);
+    try {
+      setIsAllowSubmit(false);
+      const { success, message } = await submitAction(data);
+      toast({
+        title: success ? "Welcome" : "Error",
+        description: message,
+        variant: success ? "default" : "destructive",
+      });
+      if (success) {
+        // broadcast the session to all tabs and the useEffect will handle the redirect
+        await update();
+      } else {
+        setIsAllowSubmit(true);
+      }
+    } catch {
+      toast({
+        title: "Network error",
+        description: "You are offline. Please check your connection",
+        variant: "destructive",
+      });
+      setIsAllowSubmit(true);
+    }
   };
 
   const handleImageChange = (file: File | undefined) => {
@@ -94,7 +131,7 @@ const AuthForm = <T extends FieldValues>({
             />
           ))}
 
-          <Button type="submit" className="form-btn">
+          <Button type="submit" className="form-btn" disabled={!isAllowSubmit}>
             {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
         </form>
