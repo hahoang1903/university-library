@@ -1,27 +1,26 @@
-import { signOut } from "@/auth";
+"use client";
+
 import BookList from "@/components/book/BookList";
 import { Button } from "@/components/ui/button";
 import { sampleBooks } from "@/constants";
-import { redirect } from "@/i18n/navigation";
+import { useLogoutClicked } from "@/contexts/LogoutClickedContext";
+import { signOut } from "next-auth/react";
 
-const MyProfilePage = async ({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) => {
-  const { locale } = await params;
+const MyProfilePage = () => {
+  const { setIsLogoutClicked } = useLogoutClicked();
+
+  const onLogout = async () => {
+    // use signOut client-side to broadcast to all tabs
+    // and let the useSession hook in Header handle the redirect
+    await signOut({ redirect: false });
+    setIsLogoutClicked(true);
+  };
+
   return (
     <>
-      <form
-        action={async () => {
-          "use server";
-          await signOut({ redirect: false });
-          redirect({ href: "/sign-in", locale });
-        }}
-        className="mb-10"
-      >
-        <Button>Logout</Button>
-      </form>
+      <Button className="mb-10" onClick={onLogout}>
+        Logout
+      </Button>
 
       <BookList title="Borrowed Books" books={sampleBooks} />
     </>
